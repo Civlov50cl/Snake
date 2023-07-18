@@ -97,7 +97,7 @@ def demander_nom_joueur():
 def afficher_ecran_demarrage(fenetre):
     police_demarrage = pygame.font.Font(None, 72)
     texte_demarrage = police_demarrage.render("Jeu Snake", True, (255, 255, 255))
-    texte_commandes = police.render("Utilisez les flèches pour jouer", True, (255, 255, 255))
+    texte_commandes = police.render("Utilisez les touches z, q, s, d pour jouer", True, (255, 255, 255))
     texte_appuyez = police.render("Appuyez sur une flèche pour commencer", True, (255, 255, 255))
     fenetre.blit(texte_demarrage, (taille_fenetre[0] // 2 - texte_demarrage.get_width() // 2, taille_fenetre[1] // 2 - texte_demarrage.get_height() // 2))
     fenetre.blit(texte_commandes, (taille_fenetre[0] // 2 - texte_commandes.get_width() // 2, taille_fenetre[1] // 2 + texte_demarrage.get_height() // 2))
@@ -126,13 +126,13 @@ while en_cours:
             if event.type == pygame.QUIT:
                 en_cours = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT and direction != "droite":
+                if event.key == pygame.K_q and direction != "droite":
                     direction = "gauche"
-                if event.key == pygame.K_RIGHT and direction != "gauche":
+                if event.key == pygame.K_d and direction != "gauche":
                     direction = "droite"
-                if event.key == pygame.K_UP and direction != "bas":
+                if event.key == pygame.K_z and direction != "bas":
                     direction = "haut"
-                if event.key == pygame.K_DOWN and direction != "haut":
+                if event.key == pygame.K_s and direction != "haut":
                     direction = "bas"
 
         tete = serpent[0]
