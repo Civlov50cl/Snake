@@ -15,6 +15,7 @@ horloge = pygame.time.Clock()
 serpent = [(200, 200), (210, 200), (220, 200)]
 direction = "droite"
 
+
 def creer_pomme(serpent):
     while True:
         x = random.randint(0, taille_fenetre[0] // 10 - 1) * 10
@@ -22,6 +23,7 @@ def creer_pomme(serpent):
         pomme = (x, y)
         if pomme not in serpent:
             return pomme
+
 
 pomme = creer_pomme(serpent)
 score = 0
@@ -32,20 +34,30 @@ meilleur_joueur = ""
 
 if os.path.exists("meilleur_score.txt"):
     with open("meilleur_score.txt", "r") as f:
-        meilleur_score = int(f.readline().strip())  
-        meilleur_joueur = f.readline().strip()  
+        meilleur_score = int(f.readline().strip())
+        meilleur_joueur = f.readline().strip()
 
 nouveau_meilleur_score = False
-def afficher_game_over(fenetre, score, meilleur_score, meilleur_joueur ):
+
+
+def afficher_game_over(fenetre, score, meilleur_score, meilleur_joueur):
     police_game_over = pygame.font.Font(None, 72)
-    texte_game_over = police_game_over.render("Game Over", True, (255, 255, 255))
+    texte_game_over = police_game_over.render(
+        "Game Over", True, (255, 255, 255))
     texte_score = police.render(f"Score : {score}", True, (255, 255, 255))
-    texte_meilleur_score = police.render(f"Meilleur score : {meilleur_score} ({meilleur_joueur})", True, (255, 255, 255))
-    texte_rejouer = police.render("Appuyez sur R pour rejouer ou Echap pour quitter", True,(255, 255, 255))
-    fenetre.blit(texte_game_over, (taille_fenetre[0] // 2 - texte_game_over.get_width() // 2, taille_fenetre[1] // 2 - texte_game_over.get_height() // 2))
-    fenetre.blit(texte_score, (taille_fenetre[0] // 2 - texte_score.get_width() // 2, taille_fenetre[1] // 2 + texte_game_over.get_height() // 2))
-    fenetre.blit(texte_rejouer, (taille_fenetre[0] // 2 - texte_rejouer.get_width() // 2, taille_fenetre[1] // 2 + texte_game_over.get_height() + texte_score.get_height() + texte_meilleur_score.get_height()))
-    fenetre.blit(texte_meilleur_score, (taille_fenetre[0] // 2 - texte_meilleur_score.get_width() // 2, taille_fenetre[1] // 2 + texte_game_over.get_height() + texte_score.get_height()))
+    texte_meilleur_score = police.render(
+        f"Meilleur score : {meilleur_score} ({meilleur_joueur})", True, (255, 255, 255))
+    texte_rejouer = police.render(
+        "Appuyez sur R pour rejouer ou Echap pour quitter", True, (255, 255, 255))
+    fenetre.blit(texte_game_over, (taille_fenetre[0] // 2 - texte_game_over.get_width(
+    ) // 2, taille_fenetre[1] // 2 - texte_game_over.get_height() // 2))
+    fenetre.blit(texte_score, (taille_fenetre[0] // 2 - texte_score.get_width(
+    ) // 2, taille_fenetre[1] // 2 + texte_game_over.get_height() // 2))
+    fenetre.blit(texte_rejouer, (taille_fenetre[0] // 2 - texte_rejouer.get_width() // 2, taille_fenetre[1] //
+                 2 + texte_game_over.get_height() + texte_score.get_height() + texte_meilleur_score.get_height()))
+    fenetre.blit(texte_meilleur_score, (taille_fenetre[0] // 2 - texte_meilleur_score.get_width(
+    ) // 2, taille_fenetre[1] // 2 + texte_game_over.get_height() + texte_score.get_height()))
+
 
 def creer_obstacles(nombre_obstacles, serpent, pomme):
     obstacles = []
@@ -56,7 +68,6 @@ def creer_obstacles(nombre_obstacles, serpent, pomme):
         if obstacle not in serpent and obstacle != pomme and obstacle != (200, 200) and obstacle != (210, 200) and obstacle != (220, 200):
             obstacles.append(obstacle)
     return obstacles
-
 
 
 def demander_nom_joueur():
@@ -82,26 +93,35 @@ def demander_nom_joueur():
 
         fenetre.fill((0, 0, 0))
         if afficher_texte:
-            texte_felicitations = police.render("Félicitations, tu as battu le record. Entre ton nom :", True, (255, 255, 255))
-            texte_nom = police.render(f"Nom: {nom_joueur}", True, (255, 255, 255))
-            fenetre.blit(texte_felicitations, (taille_fenetre[0] // 2 - texte_felicitations.get_width() // 2, taille_fenetre[1] // 2 - texte_felicitations.get_height()))
-            fenetre.blit(texte_nom, (taille_fenetre[0] // 2 - texte_nom.get_width() // 2, taille_fenetre[1] // 2))
-        
+            texte_felicitations = police.render(
+                "Félicitations, tu as battu le record. Entre ton nom :", True, (255, 255, 255))
+            texte_nom = police.render(
+                f"Nom: {nom_joueur}", True, (255, 255, 255))
+            fenetre.blit(texte_felicitations, (taille_fenetre[0] // 2 - texte_felicitations.get_width(
+            ) // 2, taille_fenetre[1] // 2 - texte_felicitations.get_height()))
+            fenetre.blit(
+                texte_nom, (taille_fenetre[0] // 2 - texte_nom.get_width() // 2, taille_fenetre[1] // 2))
+
         pygame.display.flip()
-    
+
     pygame.display.set_caption("Jeu Snake")
     return nom_joueur
 
 
-
 def afficher_ecran_demarrage(fenetre):
     police_demarrage = pygame.font.Font(None, 72)
-    texte_demarrage = police_demarrage.render("Jeu Snake", True, (255, 255, 255))
-    texte_commandes = police.render("Utilisez les touches z, q, s, d pour jouer", True, (255, 255, 255))
-    texte_appuyez = police.render("Appuyez sur une flèche pour commencer", True, (255, 255, 255))
-    fenetre.blit(texte_demarrage, (taille_fenetre[0] // 2 - texte_demarrage.get_width() // 2, taille_fenetre[1] // 2 - texte_demarrage.get_height() // 2))
-    fenetre.blit(texte_commandes, (taille_fenetre[0] // 2 - texte_commandes.get_width() // 2, taille_fenetre[1] // 2 + texte_demarrage.get_height() // 2))
-    fenetre.blit(texte_appuyez, (taille_fenetre[0] // 2 - texte_appuyez.get_width() // 2, taille_fenetre[1] // 2 + texte_demarrage.get_height() + texte_commandes.get_height()))
+    texte_demarrage = police_demarrage.render(
+        "Jeu Snake", True, (255, 255, 255))
+    texte_commandes = police.render(
+        "Utilisez les touches z, q, s, d pour jouer", True, (255, 255, 255))
+    texte_appuyez = police.render(
+        "Appuyez sur une flèche pour commencer", True, (255, 255, 255))
+    fenetre.blit(texte_demarrage, (taille_fenetre[0] // 2 - texte_demarrage.get_width(
+    ) // 2, taille_fenetre[1] // 2 - texte_demarrage.get_height() // 2))
+    fenetre.blit(texte_commandes, (taille_fenetre[0] // 2 - texte_commandes.get_width(
+    ) // 2, taille_fenetre[1] // 2 + texte_demarrage.get_height() // 2))
+    fenetre.blit(texte_appuyez, (taille_fenetre[0] // 2 - texte_appuyez.get_width(
+    ) // 2, taille_fenetre[1] // 2 + texte_demarrage.get_height() + texte_commandes.get_height()))
 
 
 game_over = False
@@ -147,12 +167,16 @@ while en_cours:
             y += 10
         nouvelle_tete = (x, y)
 
-        if (x < 0 or x >= taille_fenetre[0] or y < 0 or y >= taille_fenetre[1] or nouvelle_tete in serpent[1:] or nouvelle_tete in obstacles) and score != 0:
+        premier_mouvement = True
+
+        if (x < 0 or x >= taille_fenetre[0] or y < 0 or y >= taille_fenetre[1] or (nouvelle_tete in serpent[1:] and not premier_mouvement) or nouvelle_tete in obstacles):
             game_over = True
 
         else:
             serpent.insert(0, nouvelle_tete)
             serpent.pop()
+
+        premier_mouvement = False
 
         if tete == pomme:
             score += 1
@@ -174,12 +198,11 @@ while en_cours:
         for obstacle in obstacles:
             pygame.draw.rect(fenetre, (0, 0, 255), (*obstacle, 10, 10))
 
-
         texte = police.render(f"Score: {score}", True, (255, 255, 255))
         fenetre.blit(texte, (10, 10))
-        texte_meilleur_score = police.render(f"Meilleur score : {meilleur_score} ({meilleur_joueur})", True, (255, 255, 255))
+        texte_meilleur_score = police.render(
+            f"Meilleur score : {meilleur_score} ({meilleur_joueur})", True, (255, 255, 255))
         fenetre.blit(texte_meilleur_score, (10, 50))
-
 
         pygame.display.flip()
         horloge.tick(15 + score)
@@ -207,7 +230,7 @@ while en_cours:
                 pomme = creer_pomme(serpent)
                 nombre_obstacles = 10
                 obstacles = creer_obstacles(nombre_obstacles, serpent, pomme)
-
+                premier_mouvement = True
 
 
 pygame.quit()
